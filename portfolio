@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruchita B P — Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --bg:#0B0F14;
+    --surface:#12181F;
+    --surface2:#171F28;
+    --border:#232C38;
+    --text:#E7ECF3;
+    --muted:#8A94A6;
+    --accent:#4FD1C5;
+    --accent2:#5B8DEF;
+    --amber:#F2B84B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  .mono{ font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+  a{color:inherit;}
+  ul{list-style:none;}
+  .container{ max-width:1100px; margin:0 auto; padding:0 24px; position:relative; z-index:2; }
+  section{ padding:96px 0; position:relative; }
+  svg.icon{ flex-shrink:0; }
+
+  /* NAV */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,15,20,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    max-width:1100px; margin:0 auto; padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    background:none; border:none; color:var(--text);
+    font-size:15px; font-weight:600; cursor:pointer;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo .accent{ color:var(--accent); }
+  .navlinks{ display:flex; gap:4px; }
+  .navlink{
+    background:none; border:none; color:var(--muted);
+    font-size:13px; padding:8px 12px; border-radius:6px;
+    cursor:pointer; transition:color .15s, background .15s;
+  }
+  .navlink:hover{ color:var(--text); background:var(--surface2); }
+  .navlink.active{ color:var(--accent); }
+  .menubtn{ display:none; background:none; border:none; color:var(--text); cursor:pointer; }
+  .mobilemenu{ display:none; flex-direction:column; padding:8px 24px 20px; border-top:1px solid var(--border); }
+  .mobilemenu.open{ display:flex; }
+  .mobilelink{ background:none; border:none; color:var(--muted); text-align:left; padding:10px 0; font-size:14px; cursor:pointer; }
+
+  @media (max-width:760px){
+    .navlinks{ display:none; }
+    .menubtn{ display:block; }
+  }
+
+  /* HERO */
+  #home{ padding-top:120px; }
+  .dotgrid{
+    position:absolute; inset:0; z-index:1;
+    background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+    background-size:26px 26px;
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 20%, black 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 20%, black 40%, transparent 100%);
+    opacity:0.6;
+  }
+  .pill{
+    display:inline-flex; align-items:center; font-size:12px; letter-spacing:0.5px;
+    color:var(--accent); background:rgba(79,209,197,0.08);
+    border:1px solid rgba(79,209,197,0.3); border-radius:20px;
+    padding:6px 14px; margin-bottom:28px;
+  }
+  .dot-live{ width:6px; height:6px; border-radius:50%; background:var(--accent); display:inline-block; margin-right:8px; }
+  h1.h1{ font-size:clamp(42px,7vw,76px); font-weight:800; line-height:1.02; letter-spacing:-1.5px; }
+  .tagline{ font-size:clamp(16px,2vw,20px); color:var(--muted); max-width:620px; margin-top:20px; line-height:1.6; }
+  .hero-actions{ display:flex; gap:14px; margin-top:36px; flex-wrap:wrap; }
+  .btn-primary{
+    background:var(--accent); color:#062521; border:none; padding:13px 22px;
+    border-radius:8px; font-size:13.5px; font-weight:700; cursor:pointer;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(79,209,197,0.25); }
+  .btn-ghost{
+    background:transparent; color:var(--text); border:1px solid var(--border); padding:13px 22px;
+    border-radius:8px; font-size:13.5px; font-weight:600; cursor:pointer;
+    transition:border-color .15s, transform .15s;
+  }
+  .btn-ghost:hover{ border-color:var(--accent); transform:translateY(-2px); }
+  .stat-row{ display:flex; gap:40px; margin-top:72px; flex-wrap:wrap; }
+  .stat-box{ min-width:100px; }
+  .stat-value{ font-size:32px; font-weight:700; color:var(--accent); }
+  .stat-label{ font-size:12px; color:var(--muted); margin-top:4px; text-transform:uppercase; letter-spacing:0.5px; }
+  .scrolldown{
+    position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+    background:none; border:none; color:var(--muted); cursor:pointer;
+    animation:bob 2s infinite;
+  }
+  @keyframes bob{ 0%,100%{ transform:translate(-50%,0); } 50%{ transform:translate(-50%,6px); } }
+
+  /* SECTION LABEL */
+  .section-label-row{ display:flex; align-items:center; gap:14px; margin-bottom:40px; }
+  .section-index{ color:var(--accent); font-size:13px; opacity:0.8; }
+  .section-title{ font-size:28px; font-weight:700; white-space:nowrap; }
+  .section-rule{ flex:1; height:1px; background:var(--border); }
+
+  /* ABOUT */
+  .about-text{ font-size:17px; line-height:1.8; color:#C7D0DC; max-width:720px; }
+  .about-meta{ margin-top:32px; display:flex; flex-direction:column; gap:12px; }
+  .meta-row{ display:flex; align-items:center; gap:10px; font-size:14.5px; color:var(--muted); }
+
+  /* SKILLS */
+  .tabrow{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+  .tabbtn{
+    background:var(--surface); border:1px solid var(--border); color:var(--muted);
+    padding:8px 14px; border-radius:7px; font-size:12.5px; cursor:pointer; transition:all .15s;
+  }
+  .tabbtn:hover{ color:var(--text); }
+  .tabbtn.active{ color:var(--accent); border-color:var(--accent); background:rgba(79,209,197,0.08); }
+  .chip-wrap{ display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
+  .chip{ background:var(--surface2); border:1px solid var(--border); padding:8px 14px; border-radius:7px; font-size:13px; color:#D7DEE8; }
+  .chip-sm{ padding:5px 10px; font-size:11.5px; color:var(--muted); }
+
+  /* EXPERIENCE TICKET */
+  .ticket{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:28px; border-left:3px solid var(--accent);
+  }
+  .ticket-head{ display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; }
+  .ticket-id{ color:var(--muted); font-size:12.5px; }
+  .ticket-role{ font-size:21px; font-weight:700; margin-top:4px; }
+  .ticket-org{ font-size:14.5px; color:var(--accent); margin-top:2px; }
+  .status-pill{ padding:5px 12px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:0.5px; white-space:nowrap; }
+  .status-progress{ color:var(--amber); background:rgba(242,184,75,0.12); border:1px solid rgba(242,184,75,0.35); }
+  .ticket-meta-row{
+    display:flex; justify-content:space-between; align-items:center; margin-top:20px;
+    padding-top:16px; border-top:1px solid var(--border); flex-wrap:wrap; gap:10px;
+  }
+  .ticket-meta{ font-size:12.5px; color:var(--muted); }
+  .expandbtn{ background:none; border:none; color:var(--accent); font-size:12px; cursor:pointer; display:flex; align-items:center; gap:4px; }
+  .expandbtn svg{ transition:transform .2s; }
+  .expandbtn.open svg{ transform:rotate(180deg); }
+  .notes-groups{ display:none; flex-direction:column; gap:22px; margin-top:20px; }
+  .notes-groups.open{ display:flex; }
+  .note-group-label{ font-size:11.5px; color:var(--accent); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:10px; }
+  .notes-list{ display:flex; flex-direction:column; gap:10px; }
+  .note-item{ font-size:15px; line-height:1.6; color:#C7D0DC; }
+  .note-bullet{ color:var(--accent); margin-right:6px; }
+
+  /* PROJECTS */
+  .project-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:18px; }
+  .projcard{ background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:22px; transition:transform .18s, border-color .18s; }
+  .projcard:hover{ transform:translateY(-4px); border-color:var(--accent); }
+  .proj-top{ display:flex; justify-content:space-between; align-items:center; }
+  .proj-id{ font-size:11.5px; color:var(--muted); }
+  .proj-title{ font-size:18px; font-weight:700; margin:12px 0 8px; }
+  .proj-desc{ font-size:14px; color:var(--muted); line-height:1.6; margin-bottom:14px; }
+
+  /* CERTIFICATIONS */
+  .sub-label{ font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:14px; }
+  .cert-group{ margin-bottom:32px; }
+  .cert-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:14px; }
+  .certcard{
+    background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px;
+    display:flex; gap:14px; align-items:flex-start; transition:border-color .15s, transform .15s;
+  }
+  .certcard:hover{ border-color:var(--accent); transform:translateY(-2px); }
+  .cert-name{ font-size:14.5px; font-weight:600; }
+  .cert-issuer{ font-size:12px; color:var(--muted); margin-top:3px; }
+
+  /* ACHIEVEMENTS */
+  .achieve-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:14px; }
+  .achievecard{ background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; transition:border-color .15s, transform .15s; }
+  .achievecard:hover{ border-color:var(--accent); transform:translateY(-2px); }
+  .achieve-title{ font-size:15px; font-weight:700; margin-top:12px; }
+  .achieve-org{ font-size:12.5px; color:var(--muted); margin-top:4px; }
+  .plain-list{ display:flex; flex-direction:column; gap:10px; }
+  .plain-item{ font-size:14.5px; color:#C7D0DC; }
+
+  /* EDUCATION */
+  .timeline-row{ display:flex; gap:20px; }
+  .timeline-dot-col{ display:flex; flex-direction:column; align-items:center; }
+  .timeline-dot{ width:10px; height:10px; border-radius:50%; background:var(--accent); margin-top:6px; flex-shrink:0; }
+  .timeline-line{ width:1px; flex:1; background:var(--border); margin-top:4px; }
+  .timeline-year{ font-size:12px; color:var(--accent); }
+  .timeline-level{ font-size:17px; font-weight:700; margin-top:4px; }
+  .timeline-school{ font-size:14px; color:var(--muted); margin-top:2px; }
+  .timeline-score{ font-size:13.5px; color:#C7D0DC; margin-top:4px; }
+
+  /* CONTACT */
+  .contact-head{ font-size:clamp(26px,4vw,38px); font-weight:800; margin-bottom:10px; }
+  .contact-sub{ color:var(--muted); font-size:15.5px; margin-bottom:32px; }
+  .contact-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:14px; }
+  .contactcard{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 18px;
+    display:flex; align-items:center; gap:12px; text-decoration:none; font-size:14px;
+    transition:border-color .15s, transform .15s;
+  }
+  .contactcard:hover{ border-color:var(--accent); transform:translateY(-2px); }
+  .contactcard .spacer{ margin-left:auto; }
+
+  footer{ text-align:center; padding:28px 0; border-top:1px solid var(--border); color:var(--muted); font-size:12.5px; padding-bottom:100px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <button class="logo" data-goto="home">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+      ruchita<span class="accent">b.p</span>
+    </button>
+    <nav class="navlinks" id="navlinks"></nav>
+    <button class="menubtn" id="menubtn" aria-label="menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobilemenu" id="mobilemenu"></div>
+</header>
+
+<!-- HERO -->
+<section id="home">
+  <div class="dotgrid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="pill mono"><span class="dot-live"></span> RECORD STATUS: ACTIVE &middot; AVAILABLE FOR OPPORTUNITIES</div>
+    <h1 class="h1">Ruchita B P</h1>
+    <p class="tagline">
+      CSE working on the <span style="color:var(--accent)">ServiceNow</span> platform —
+      development, testing, and GRC (Governance, Risk &amp; Compliance). Interested in
+      full-stack development, data analytics, and cybersecurity.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary mono" data-goto="projects">view_projects()</button>
+      <button class="btn-ghost mono" data-goto="contact">get_in_touch()</button>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="stat-value mono" id="statCgpa">0</div><div class="stat-label mono">CGPA</div></div>
+      <div class="stat-box"><div class="stat-value mono" id="statCerts">0</div><div class="stat-label mono">Certifications</div></div>
+      <div class="stat-box"><div class="stat-value mono" id="statProjects">0</div><div class="stat-label mono">Projects</div></div>
+    </div>
+  </div>
+  <button class="scrolldown" data-goto="about" aria-label="scroll down">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label-row"><span class="section-index mono">01</span><h2 class="section-title">About</h2><span class="section-rule"></span></div>
+    <p class="about-text">
+      I am an aspiring technology professional committed to continuous growth across
+      the IT stack — from core algorithms to enterprise platforms. I am currently
+      interning on ServiceNow at Merck, where my responsibilities span application
+      development, structured testing, and governance, risk, and compliance (GRC).
+      My fields of interest include full-stack development, data analytics, and
+      cybersecurity, which I pursue through independent projects such as a
+      blockchain-based voting system, a mental-health tracking application, and a
+      hierarchical cache-replacement algorithm. I bring a problem-solving mindset,
+      strong collaborative instincts, and a consistent focus on delivering
+      high-quality outcomes.
+    </p>
+    <div class="about-meta">
+      <div class="meta-row"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4FD1C5" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Bangalore, India</span></div>
+      <div class="meta-row"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4FD1C5" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg><span>B.E CSE · New Horizon College of Engineering · 2026</span></div>
+      <div class="meta-row"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4FD1C5" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg><span>English · Hindi · Kannada</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label-row"><span class="section-index mono">02</span><h2 class="section-title">Skills</h2><span class="section-rule"></span></div>
+    <div class="tabrow" id="skillTabs"></div>
+    <div class="chip-wrap" id="skillChips"></div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label-row"><span class="section-index mono">03</span><h2 class="section-title">Experience</h2><span class="section-rule"></span></div>
+    <div class="ticket">
+      <div class="ticket-head">
+        <div>
+          <div class="ticket-id mono">REQ0192837</div>
+          <div class="ticket-role">ServiceNow Application Intern</div>
+          <div class="ticket-org">Merck</div>
+        </div>
+        <span class="status-pill status-progress mono">In Progress</span>
+      </div>
+      <div class="ticket-meta-row">
+        <span class="ticket-meta mono">duration: 17 Sep 2025 — 17 Sep 2026</span>
+        <button class="expandbtn open mono" id="expandBtn">
+          <span id="expandLabel">hide work_notes</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+      <div class="notes-groups open" id="notesGroups"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label-row"><span class="section-index mono">04</span><h2 class="section-title">Projects</h2><span class="section-rule"></span></div>
+    <div class="project-grid" id="projectGrid"></div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container">
+    <div class="section-label-row"><span class="section-index mono">05</span><h2 class="section-title">Certifications</h2><span class="section-rule"></span></div>
+    <div id="certGroups"></div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="container">
+    <div class="section-label-row"><span class="section-index mono">06</span><h2 class="section-title">Achievements</h2><span class="section-rule"></span></div>
+    <div class="achieve-grid" id="achieveGrid"></div>
+    <div style="margin-top:40px;">
+      <div class="sub-label mono">co-curricular</div>
+      <ul class="plain-list" id="cocurricularList"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-label-row"><span class="section-index mono">07</span><h2 class="section-title">Education</h2><span class="section-rule"></span></div>
+    <div id="timeline"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding-bottom:40px;">
+  <div class="container">
+    <div class="section-label-row"><span class="section-index mono">08</span><h2 class="section-title">Contact</h2><span class="section-rule"></span></div>
+    <h2 class="contact-head">Get in touch.</h2>
+    <p class="contact-sub">Open to internships, entry-level roles, and collaborative projects.</p>
+    <div class="contact-grid">
+      <a href="mailto:bpruchi18@gmail.com" class="contactcard">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4FD1C5" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
+        <span>bpruchi18@gmail.com</span>
+        <svg class="icon spacer" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A94A6" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+      <a href="tel:+916361720317" class="contactcard">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4FD1C5" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.79.63 2.65a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.43-1.43a2 2 0 0 1 2.11-.45c.86.3 1.75.51 2.65.63A2 2 0 0 1 22 16.92z"/></svg>
+        <span>+91 63617 20317</span>
+        <svg class="icon spacer" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A94A6" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/ruchita-b-p-6ba8ab28a/" target="_blank" rel="noreferrer" class="contactcard">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4FD1C5" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        <span>linkedin.com/in/ruchita-b-p</span>
+        <svg class="icon spacer" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A94A6" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <div class="contactcard" style="cursor:default;">
+        <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4FD1C5" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Bangalore, India</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><span class="mono"></span></footer>
+
+<script>
+/* ---------------------------------- DATA ---------------------------------- */
+
+const NAV = [
+  { id: "home", label: "home" },
+  { id: "about", label: "about" },
+  { id: "skills", label: "skills" },
+  { id: "experience", label: "experience" },
+  { id: "projects", label: "projects" },
+  { id: "certifications", label: "certs" },
+  { id: "achievements", label: "achievements" },
+  { id: "education", label: "education" },
+  { id: "contact", label: "contact" },
+];
+
+const SKILLS = {
+  "Programming": ["Java", "Python", "C", "C++", "SQL"],
+  "Web Development": ["HTML", "CSS"],
+  "Concepts": ["Data Structures & Algorithms", "Linux OS", "AI Fundamentals", "OOP", "Networks", "Tableau", "ServiceNow"],
+  "Soft Skills": ["Problem Solving", "Critical Thinking", "Creative Thinking", "Collaboration"],
+};
+
+const EXPERIENCE_GROUPS = [
+  {
+    category: "Development",
+    points: ["Contributed to the development of 5 stories on the ServiceNow platform, delivering functionality in line with sprint requirements."],
+  },
+  {
+    category: "Testing",
+    points: ["Managed the testing lifecycle using Jira — authored and executed structured test cases across release cycles to validate application functionality."],
+  },
+  {
+    category: "GRC (Governance, Risk & Compliance)",
+    points: ["Currently undergoing training in GRC on the ServiceNow platform."],
+  },
+  {
+    category: "Platform Team & Communications",
+    points: [
+      "Supported the Platform team's communication strategy by configuring an automated reply system for the shared mailbox using Power Automate.",
+      "Designed and developed the Platform team's internal web page.",
+      "Designed the Platform team's brand identity, including the team logo and digital signature.",
+    ],
+  },
+];
+
+const PROJECTS = [
+  { id: "PRJ-01", title: "Brick Breaker Game", stack: ["Java", "JFrames", "AWT"],
+    desc: "Interactive arcade game with paddle control, adjustable ball speed for scaling difficulty, and defined win/loss conditions for a complete play loop." },
+  { id: "PRJ-02", title: "Depression Detector & Journal", stack: ["Python", "Flask", "MySQL"],
+    desc: "Mental-health tracking app with secure login, a diagnostic quiz, a private journal, and a habit tracker — backend analysis drives personalized feedback." },
+  { id: "PRJ-03", title: "Blockchain-Based Voting System", stack: ["Python", "Flask", "HTML", "CSS", "RSA"],
+    desc: "Full-stack voting platform using RSA asymmetric encryption for vote confidentiality and custom blockchain logic for data integrity, with a live visualization frontend." },
+  { id: "PRJ-04", title: "Edge Tutor — LUCO Cache", stack: ["Python", "Visual Studio"],
+    desc: "Designed LUCO (Least Used Category-Object), a hierarchical cache-replacement algorithm that evicts by category- and object-level demand, outperforming LRU/LFU." },
+];
+
+const CERT_GROUPS = [
+  { label: "Major Certifications", items: [
+    { name: "Certified System Administrator (CSA)", issuer: "ServiceNow" },
+    { name: "CIS — Data Foundations (CMDB)", issuer: "ServiceNow" },
+  ]},
+  { label: "Micro Certifications", items: [
+    { name: "Flows", issuer: "ServiceNow" },
+    { name: "CMDB Health", issuer: "ServiceNow" },
+    { name: "Configure the CMDB", issuer: "ServiceNow" },
+  ]},
+  { label: "Other Certifications", items: [
+    { name: "Fundamentals of Artificial Intelligence", issuer: "NPTEL" },
+    { name: "Blockchain and its Applications", issuer: "NPTEL" },
+    { name: "Codefather Hackathon — Connect 2k24", issuer: "Participant" },
+  ]},
+];
+
+const ACHIEVEMENTS = [
+  { title: "6th Topper, Dept. of CSE", org: "New Horizon College of Engineering" },
+  { title: "Academic Excellence Award", org: "New Horizon College of Engineering" },
+  { title: "NTSE Level-1 Qualifier", org: "National Talent Search Exam" },
+  { title: "NTSE Level-2 Participant", org: "National Talent Search Exam" },
+  { title: "Abacus Champion", org: "Regional Meet" },
+];
+
+const EDUCATION = [
+  { level: "B.E — Computer Science & Engineering", school: "New Horizon College of Engineering, Bangalore", score: "9.76 CGPA", year: "2026" },
+  { level: "12th (PUC)", school: "Sri Chaitanya PU College", score: "96.66%", year: "2022" },
+  { level: "10th (CBSE)", school: "Sri Chaitanya Techno School", score: "88%", year: "2020" },
+];
+
+const COCURRICULAR = [
+  "Volunteer, The Nudge Institute (virtual) — Marathalli, 2 weeks",
+  "Volunteer, NASSCOM 2024 — event execution & industry networking",
+];
+
+const ICON_AWARD = '<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4FD1C5" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5L17 22l-5-3-5 3 1.5-8.5"/></svg>';
+const ICON_SHIELD = '<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4FD1C5" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><polyline points="9 12 11 14 15 10"/></svg>';
+const ICON_GITBRANCH = '<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8A94A6" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>';
+const ICON_SHIELD_SM = '<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4FD1C5" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><polyline points="9 12 11 14 15 10"/></svg>';
+
+/* ------------------------------- RENDER NAV -------------------------------- */
+
+const navlinks = document.getElementById("navlinks");
+const mobilemenu = document.getElementById("mobilemenu");
+NAV.forEach(n => {
+  const btn = document.createElement("button");
+  btn.className = "navlink mono";
+  btn.textContent = n.label;
+  btn.dataset.id = n.id;
+  btn.addEventListener("click", () => goTo(n.id));
+  navlinks.appendChild(btn);
+
+  const mbtn = document.createElement("button");
+  mbtn.className = "mobilelink mono";
+  mbtn.textContent = n.label;
+  mbtn.addEventListener("click", () => { goTo(n.id); mobilemenu.classList.remove("open"); });
+  mobilemenu.appendChild(mbtn);
+});
+
+document.getElementById("menubtn").addEventListener("click", () => {
+  mobilemenu.classList.toggle("open");
+});
+
+document.querySelectorAll("[data-goto]").forEach(el => {
+  el.addEventListener("click", () => goTo(el.dataset.goto));
+});
+
+function goTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+/* ------------------------------ SCROLL SPY --------------------------------- */
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll(".navlink").forEach(l => l.classList.remove("active"));
+      const link = document.querySelector(`.navlink[data-id="${e.target.id}"]`);
+      if (link) link.classList.add("active");
+    }
+  });
+}, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+
+NAV.forEach(n => {
+  const el = document.getElementById(n.id);
+  if (el) observer.observe(el);
+});
+
+/* ------------------------------ ANIMATED STATS ------------------------------ */
+
+function animateStats() {
+  const certCount = CERT_GROUPS.reduce((sum, g) => sum + g.items.length, 0);
+  const targets = { cgpa: 9.76, certs: certCount, projects: PROJECTS.length };
+  const duration = 900;
+  const start = performance.now();
+  function tick(now) {
+    const p = Math.min(1, (now - start) / duration);
+    document.getElementById("statCgpa").textContent = (targets.cgpa * p).toFixed(2);
+    document.getElementById("statCerts").textContent = Math.round(targets.certs * p);
+    document.getElementById("statProjects").textContent = Math.round(targets.projects * p);
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+animateStats();
+
+/* --------------------------------- SKILLS ----------------------------------- */
+
+const skillTabsEl = document.getElementById("skillTabs");
+const skillChipsEl = document.getElementById("skillChips");
+let currentTab = Object.keys(SKILLS)[0];
+
+function renderSkillTabs() {
+  skillTabsEl.innerHTML = "";
+  Object.keys(SKILLS).forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "tabbtn mono" + (cat === currentTab ? " active" : "");
+    btn.textContent = cat;
+    btn.addEventListener("click", () => { currentTab = cat; renderSkillTabs(); renderSkillChips(); });
+    skillTabsEl.appendChild(btn);
+  });
+}
+function renderSkillChips() {
+  skillChipsEl.innerHTML = "";
+  SKILLS[currentTab].forEach(s => {
+    const span = document.createElement("span");
+    span.className = "chip mono";
+    span.textContent = s;
+    skillChipsEl.appendChild(span);
+  });
+}
+renderSkillTabs();
+renderSkillChips();
+
+/* ------------------------------- EXPERIENCE --------------------------------- */
+
+const notesGroupsEl = document.getElementById("notesGroups");
+EXPERIENCE_GROUPS.forEach(g => {
+  const wrap = document.createElement("div");
+  const label = document.createElement("div");
+  label.className = "note-group-label mono";
+  label.textContent = g.category;
+  wrap.appendChild(label);
+  const ul = document.createElement("ul");
+  ul.className = "notes-list";
+  g.points.forEach(pt => {
+    const li = document.createElement("li");
+    li.className = "note-item";
+    li.innerHTML = `<span class="note-bullet mono">&gt;</span> ${pt}`;
+    ul.appendChild(li);
+  });
+  wrap.appendChild(ul);
+  notesGroupsEl.appendChild(wrap);
+});
+
+const expandBtn = document.getElementById("expandBtn");
+const expandLabel = document.getElementById("expandLabel");
+expandBtn.addEventListener("click", () => {
+  const isOpen = notesGroupsEl.classList.toggle("open");
+  expandBtn.classList.toggle("open", isOpen);
+  expandLabel.textContent = isOpen ? "hide work_notes" : "show work_notes";
+});
+
+/* --------------------------------- PROJECTS ---------------------------------- */
+
+const projectGridEl = document.getElementById("projectGrid");
+PROJECTS.forEach(p => {
+  const card = document.createElement("div");
+  card.className = "projcard";
+  card.innerHTML = `
+    <div class="proj-top">
+      <span class="proj-id mono">${p.id}</span>
+      ${ICON_GITBRANCH}
+    </div>
+    <h3 class="proj-title">${p.title}</h3>
+    <p class="proj-desc">${p.desc}</p>
+    <div class="chip-wrap">
+      ${p.stack.map(t => `<span class="chip chip-sm mono">${t}</span>`).join("")}
+    </div>
+  `;
+  projectGridEl.appendChild(card);
+});
+
+/* ------------------------------ CERTIFICATIONS -------------------------------- */
+
+const certGroupsEl = document.getElementById("certGroups");
+CERT_GROUPS.forEach(group => {
+  const wrap = document.createElement("div");
+  wrap.className = "cert-group";
+  const label = document.createElement("div");
+  label.className = "sub-label mono";
+  label.textContent = group.label;
+  wrap.appendChild(label);
+  const grid = document.createElement("div");
+  grid.className = "cert-grid";
+  group.items.forEach(c => {
+    const card = document.createElement("div");
+    card.className = "certcard";
+    card.innerHTML = `
+      ${ICON_SHIELD_SM}
+      <div>
+        <div class="cert-name">${c.name}</div>
+        <div class="cert-issuer mono">${c.issuer}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  wrap.appendChild(grid);
+  certGroupsEl.appendChild(wrap);
+});
+
+/* ------------------------------- ACHIEVEMENTS --------------------------------- */
+
+const achieveGridEl = document.getElementById("achieveGrid");
+ACHIEVEMENTS.forEach(a => {
+  const card = document.createElement("div");
+  card.className = "achievecard";
+  card.innerHTML = `
+    ${ICON_AWARD}
+    <div class="achieve-title">${a.title}</div>
+    <div class="achieve-org">${a.org}</div>
+  `;
+  achieveGridEl.appendChild(card);
+});
+
+const cocurricularEl = document.getElementById("cocurricularList");
+COCURRICULAR.forEach(c => {
+  const li = document.createElement("li");
+  li.className = "plain-item";
+  li.innerHTML = `<span class="note-bullet mono">&gt;</span> ${c}`;
+  cocurricularEl.appendChild(li);
+});
+
+/* --------------------------------- EDUCATION ----------------------------------- */
+
+const timelineEl = document.getElementById("timeline");
+EDUCATION.forEach((e, i) => {
+  const row = document.createElement("div");
+  row.className = "timeline-row";
+  row.innerHTML = `
+    <div class="timeline-dot-col">
+      <div class="timeline-dot"></div>
+      ${i !== EDUCATION.length - 1 ? '<div class="timeline-line"></div>' : ''}
+    </div>
+    <div style="padding-bottom:32px;">
+      <div class="timeline-year mono">${e.year}</div>
+      <div class="timeline-level">${e.level}</div>
+      <div class="timeline-school">${e.school}</div>
+      <div class="timeline-score">${e.score}</div>
+    </div>
+  `;
+  timelineEl.appendChild(row);
+});
+</script>
+</body>
+</html>
